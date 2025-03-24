@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onyx UI Kit | Soltan Soltanli</title>
+  <link rel="icon" href="/onyx.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="onyx.css">
+  <style>
+    /* Documentation specific styles */
+    :root {
+      --doc-sidebar-width: 260px;
+      --doc-content-padding: 40px;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: var(--onyx-font-sans);
+      background-color: var(--onyx-black);
+      color: var(--onyx-white);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    /* Sidebar */
+    .doc-sidebar {
+      width: var(--doc-sidebar-width);
+      background-color: var(--onyx-dark);
+      border-right: 1px solid var(--onyx-gray);
+      height: 100vh;
+      position: sticky;
+      top: 0;
+      overflow-y: auto;
+      padding: var(--onyx-spacing-md);
+    }
+    
+    .doc-sidebar-header {
+      padding: var(--onyx-spacing-md) 0;
+      border-bottom: 1px solid var(--onyx-gray);
+      margin-bottom: var(--onyx-spacing-md);
+    }
+    
+    .doc-sidebar-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--onyx-blue);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: var(--onyx-spacing-sm);
+    }
+    
+    .doc-sidebar-title i {
+      font-size: 1.5rem;
+    }
+    
+    .doc-sidebar-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .doc-sidebar-nav-item {
+      margin-bottom: var(--onyx-spacing-xs);
+    }
+    
+    .doc-sidebar-nav-link {
+      display: block;
+      padding: var(--onyx-spacing-sm) var(--onyx-spacing-md);
+      color: var(--onyx-white);
+      text-decoration: none;
+      border-radius: var(--onyx-radius-sm);
+      transition: background-color var(--onyx-transition-fast);
+    }
+    
+    .doc-sidebar-nav-link:hover {
+      background-color: var(--onyx-gray);
+      color: var(--onyx-blue);
+    }
+    
+    .doc-sidebar-nav-link.active {
+      background-color: var(--onyx-gray);
+      color: var(--onyx-blue);
+      font-weight: 500;
+    }
+    
+    .doc-sidebar-group-title {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--onyx-lighter-gray);
+      margin: var(--onyx-spacing-lg) 0 var(--onyx-spacing-sm) 0;
+      padding: 0 var(--onyx-spacing-md);
+    }
+    
+    /* Main content */
+    .doc-content {
+      flex: 1;
+      padding: var(--doc-content-padding);
+      max-width: calc(100% - var(--doc-sidebar-width));
+    }
+    
+    /* Hero section */
+    .doc-hero {
+      text-align: center;
+      padding: var(--onyx-spacing-xl) 0;
+      margin-bottom: var(--onyx-spacing-xl);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .doc-hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(94, 158, 255, 0.1) 0%, transparent 70%);
+      z-index: -1;
+    }
+    
+    .doc-hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: var(--onyx-spacing-md);
+      background: linear-gradient(to right, var(--onyx-white), var(--onyx-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+    }
+    
+    .doc-hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--onyx-lighter-gray);
+      max-width: 700px;
+      margin: 0 auto var(--onyx-spacing-lg) auto;
+    }
+    
+    .doc-hero-cta {
+      display: flex;
+      justify-content: center;
+      gap: var(--onyx-spacing-md);
+      margin-bottom: var(--onyx-spacing-xl);
+    }
+    
+    .doc-cdn-input {
+      display: flex;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: var(--onyx-dark);
+      border-radius: var(--onyx-radius-md);
+      overflow: hidden;
+      border: 1px solid var(--onyx-gray);
+    }
+    
+    .doc-cdn-input input {
+      flex: 1;
+      padding: var(--onyx-spacing-md);
+      background: transparent;
+      border: none;
+      color: var(--onyx-white);
+      font-family: var(--onyx-font-mono);
+      font-size: 0.9rem;
+    }
+    
+    .doc-cdn-input input:focus {
+      outline: none;
+    }
+    
+    .doc-cdn-button {
+      background-color: var(--onyx-gray);
+      color: var(--onyx-white);
+      border: none;
+      padding: 0 var(--onyx-spacing-md);
+      cursor: pointer;
+      transition: background-color var(--onyx-transition-fast);
+      display: flex;
+      align-items: center;
+      gap: var(--onyx-spacing-xs);
+    }
+    
+    .doc-cdn-button:hover {
+      background-color: var(--onyx-light-gray);
+    }
+    
+    /* Section styles */
+    .doc-section {
+      margin-bottom: var(--onyx-spacing-xl);
+      scroll-margin-top: calc(var(--doc-content-padding) + 20px);
+    }
+    
+    .doc-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--onyx-spacing-lg);
+      padding-bottom: var(--onyx-spacing-sm);
+      border-bottom: 1px solid var(--onyx-gray);
+    }
+    
+    .doc-section-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--onyx-white);
+      margin: 0;
+    }
+    
+    .doc-section-link {
+      color: var(--onyx-blue);
+      text-decoration: none;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: var(--onyx-spacing-xs);
+    }
+    
+    .doc-section-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Component demo */
+    .doc-component {
+      background-color: var(--onyx-dark);
+      border-radius: var(--onyx-radius-md);
+      overflow: hidden;
+      margin-bottom: var(--onyx-spacing-lg);
+      box-shadow: var(--onyx-shadow-sm);
+    }
+    
+    .doc-component-preview {
+      padding: var(--onyx-spacing-lg);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--onyx-spacing-md);
+      align-items: center;
+    }
+    
+    .doc-component-code {
+      background-color: var(--onyx-black);
+      border-top: 1px solid var(--onyx-gray);
+      position: relative;
+    }
+    
+    .doc-component-code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--onyx-spacing-sm) var(--onyx-spacing-md);
+      background-color: var(--onyx-gray);
+      border-bottom: 1px solid var(--onyx-gray);
+    }
+    
+    .doc-component-code-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin: 0;
+      color: var(--onyx-lighter-gray);
+    }
+    
+    .doc-component-code-copy {
+      background-color: transparent;
+      border: none;
+      color: var(--onyx-white);
+      cursor: pointer;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: var(--onyx-spacing-xs);
+      padding: var(--onyx-spacing-xs) var(--onyx-spacing-sm);
+      border-radius: var(--onyx-radius-sm);
+      transition: background-color var(--onyx-transition-fast);
+    }
+    
+    .doc-component-code-copy:hover {
+      background-color: var(--onyx-light-gray);
+    }
+    
+    .doc-component-code-content {
+      padding: var(--onyx-spacing-md);
+      margin: 0;
+      overflow-x: auto;
+      font-family: var(--onyx-font-mono);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: var(--onyx-white);
+    }
+    
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      body {
+        flex-direction: column;
+      }
+      
+      .doc-sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--onyx-gray);
+      }
+      
+      .doc-content {
+        max-width: 100%;
+      }
+      
+      .doc-sidebar-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--onyx-spacing-xs);
+      }
+      
+      .doc-sidebar-nav-item {
+        margin-bottom: 0;
+      }
+      
+      .doc-sidebar-group {
+        flex-basis: 100%;
+      }
+      
+      .doc-sidebar-group-title {
+        margin-top: var(--onyx-spacing-md);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .doc-hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .doc-hero-subtitle {
+        font-size: 1rem;
+      }
+      
+      .doc-section-title {
+        font-size: 1.5rem;
+      }
+    }
+    
+    /* Animation for copied tooltip */
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(5px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(5px); }
+    }
+    
+    .doc-copy-tooltip {
+      position: absolute;
+      background-color: var(--onyx-dark);
+      color: var(--onyx-white);
+      padding: var(--onyx-spacing-xs) var(--onyx-spacing-sm);
+      border-radius: var(--onyx-radius-sm);
+      font-size: 0.75rem;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 10;
+      box-shadow: var(--onyx-shadow-md);
+    }
+    
+    .doc-copy-tooltip.show {
+      animation: fadeInOut 2s ease;
+    }
+    
+    .onyx-logo-icon {
+      width: 48px;
+      height: 48px;
+      /*margin-right: var(--onyx-spacing-sm);*/
+      vertical-align: middle;
+    }
+    
+    .text-decoration-none {
+        text-decoration: none;
+    }
+    
+    .eight-px-margin-left {
+        margin-left: 8px;
+    }
+    
+    .four-px-margin-left {
+        margin-left: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <nav class="doc-sidebar">
+    <div class="doc-sidebar-header">
+      <h1 class="doc-sidebar-title">
+        <img src="/onyx.svg" alt="Onyx Logo" class="onyx-logo-icon">
+        Onyx UI
+      </h1>
+    </div>
+    
+    <ul class="doc-sidebar-nav">
+      <li class="doc-sidebar-group">
+        <h2 class="doc-sidebar-group-title">Getting Started</h2>
+        <ul class="doc-sidebar-nav">
+          <li class="doc-sidebar-nav-item">
+            <a href="#installation" class="doc-sidebar-nav-link active">Installation</a>
+          </li>
+        </ul>
+      </li>
+      
+      <li class="doc-sidebar-group">
+        <h2 class="doc-sidebar-group-title">Components</h2>
+        <ul class="doc-sidebar-nav">
+          <li class="doc-sidebar-nav-item">
+            <a href="#buttons" class="doc-sidebar-nav-link">Buttons</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#cards" class="doc-sidebar-nav-link">Cards</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#alerts" class="doc-sidebar-nav-link">Alerts</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#forms" class="doc-sidebar-nav-link">Forms</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#navigation" class="doc-sidebar-nav-link">Navigation</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#badges" class="doc-sidebar-nav-link">Badges</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#modals" class="doc-sidebar-nav-link">Modals</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#toasts" class="doc-sidebar-nav-link">Toasts</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#avatars" class="doc-sidebar-nav-link">Avatars</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#lists" class="doc-sidebar-nav-link">Lists</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#dropdowns" class="doc-sidebar-nav-link">Dropdowns</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#accordion" class="doc-sidebar-nav-link">Accordion</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#toggles" class="doc-sidebar-nav-link">Toggle Switch</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#pagination" class="doc-sidebar-nav-link">Pagination</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#spinners" class="doc-sidebar-nav-link">Spinners</a>
+          </li>
+        </ul>
+      </li>
+      
+      <li class="doc-sidebar-group">
+        <h2 class="doc-sidebar-group-title">Utilities</h2>
+        <ul class="doc-sidebar-nav">
+          <li class="doc-sidebar-nav-item">
+            <a href="#typography" class="doc-sidebar-nav-link">Typography</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#spacing" class="doc-sidebar-nav-link">Spacing</a>
+          </li>
+          <li class="doc-sidebar-nav-item">
+            <a href="#flex" class="doc-sidebar-nav-link">Flex Utilities</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  
+  <!-- Main Content -->
+  <main class="doc-content">
+    <!-- Hero Section -->
+    <section class="doc-hero">
+      <h1 class="doc-hero-title">Onyx UI Kit</h1>
+      <p class="doc-hero-subtitle">
+        A modern, dark-themed UI kit inspired by iOS but with enhanced aesthetics and soft design elements.
+        Perfect for creating sleek, professional interfaces.
+      </p>
+      
+      <div class="doc-hero-cta">
+        <a href="#installation" class="onyx-btn onyx-btn-primary onyx-btn-lg text-decoration-none">
+          Get Started
+          <i class="fas fa-arrow-right eight-px-margin-left"></i>
+        </a>
+        <a href="#buttons" class="onyx-btn onyx-btn-outline onyx-btn-lg text-decoration-none">
+          View Components
+        </a>
+      </div>
+      
+      <div class="doc-cdn-input">
+        <input type="text" value="https://onyx.soltansoltanli.com/onyx.css" readonly id="cdn-input">
+        <button class="doc-cdn-button" id="cdn-copy">
+          <i class="far fa-copy"></i>
+          Copy
+        </button>
+      </div>
+      <div class="doc-copy-tooltip" id="copy-tooltip">Copied!</div>
+    </section>
+    
+    <!-- Installation -->
+    <section class="doc-section" id="installation">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Installation</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <p>Include Onyx CSS in your project using the CDN link:</p>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;link rel="stylesheet" href="https://onyx.soltansoltanli.com/onyx.css"&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <p>Or install via npm (coming soon)</p>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">Terminal</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>npm install onyx-ui-kit</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Buttons -->
+    <section class="doc-section" id="buttons">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Buttons</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <button class="onyx-btn onyx-btn-primary">Primary</button>
+          <button class="onyx-btn onyx-btn-secondary">Secondary</button>
+          <button class="onyx-btn onyx-btn-danger">Danger</button>
+          <button class="onyx-btn onyx-btn-success">Success</button>
+          <button class="onyx-btn onyx-btn-outline">Outline</button>
+          <button class="onyx-btn onyx-btn-ghost">Ghost</button>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;button class="onyx-btn onyx-btn-primary"&gt;Primary&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-secondary"&gt;Secondary&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-danger"&gt;Danger&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-success"&gt;Success&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-outline"&gt;Outline&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-ghost"&gt;Ghost&lt;/button&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <button class="onyx-btn onyx-btn-primary onyx-btn-sm">Small</button>
+          <button class="onyx-btn onyx-btn-primary">Default</button>
+          <button class="onyx-btn onyx-btn-primary onyx-btn-lg">Large</button>
+          <button class="onyx-btn onyx-btn-primary onyx-btn-full">Full Width</button>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;button class="onyx-btn onyx-btn-primary onyx-btn-sm"&gt;Small&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-primary"&gt;Default&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-primary onyx-btn-lg"&gt;Large&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-primary onyx-btn-full"&gt;Full Width&lt;/button&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <button class="onyx-btn onyx-btn-primary onyx-btn-icon">
+            <i class="fas fa-heart"></i>
+          </button>
+          <button class="onyx-btn onyx-btn-secondary onyx-btn-icon">
+            <i class="fas fa-star"></i>
+          </button>
+          <button class="onyx-btn onyx-btn-danger onyx-btn-icon">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;button class="onyx-btn onyx-btn-primary onyx-btn-icon"&gt;
+  &lt;i class="fas fa-heart"&gt;&lt;/i&gt;
+&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-secondary onyx-btn-icon"&gt;
+  &lt;i class="fas fa-star"&gt;&lt;/i&gt;
+&lt;/button&gt;
+&lt;button class="onyx-btn onyx-btn-danger onyx-btn-icon"&gt;
+  &lt;i class="fas fa-trash"&gt;&lt;/i&gt;
+&lt;/button&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Cards -->
+    <section class="doc-section" id="cards">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Cards</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <div class="onyx-card" style="max-width: 400px;">
+            <div class="onyx-card-header">
+              <h3 class="onyx-h4">Card Title</h3>
+            </div>
+            <p class="onyx-text">This is a basic card component with some sample content. Cards are perfect for displaying grouped information.</p>
+            <div class="onyx-card-footer">
+              <button class="onyx-btn onyx-btn-primary onyx-btn-sm">Action</button>
+            </div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-card"&gt;
+  &lt;div class="onyx-card-header"&gt;
+    &lt;h3 class="onyx-h4"&gt;Card Title&lt;/h3&gt;
+  &lt;/div&gt;
+  &lt;p class="onyx-text"&gt;This is a basic card component...&lt;/p&gt;
+  &lt;div class="onyx-card-footer"&gt;
+    &lt;button class="onyx-btn onyx-btn-primary onyx-btn-sm"&gt;Action&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Alerts -->
+    <section class="doc-section" id="alerts">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Alerts</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="flex-direction: column; align-items: flex-start; gap: var(--onyx-spacing-sm);">
+          <div class="onyx-alert onyx-alert-info">
+            <div class="onyx-alert-icon">
+              <i class="fas fa-info-circle"></i>
+            </div>
+            <div>
+              <h4 class="onyx-h5">Information</h4>
+              <p class="onyx-text-sm">This is an informational alert message.</p>
+            </div>
+          </div>
+          
+          <div class="onyx-alert onyx-alert-success">
+            <div class="onyx-alert-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div>
+              <h4 class="onyx-h5">Success</h4>
+              <p class="onyx-text-sm">Your action was completed successfully.</p>
+            </div>
+          </div>
+          
+          <div class="onyx-alert onyx-alert-warning">
+            <div class="onyx-alert-icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div>
+              <h4 class="onyx-h5">Warning</h4>
+              <p class="onyx-text-sm">This action cannot be undone.</p>
+            </div>
+          </div>
+          
+          <div class="onyx-alert onyx-alert-danger">
+            <div class="onyx-alert-icon">
+              <i class="fas fa-times-circle"></i>
+            </div>
+            <div>
+              <h4 class="onyx-h5">Error</h4>
+              <p class="onyx-text-sm">Something went wrong. Please try again.</p>
+            </div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-alert onyx-alert-info"&gt;
+  &lt;div class="onyx-alert-icon"&gt;
+    &lt;i class="fas fa-info-circle"&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h4 class="onyx-h5"&gt;Information&lt;/h4&gt;
+    &lt;p class="onyx-text-sm"&gt;This is an informational alert message.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-alert onyx-alert-success"&gt;
+  &lt;div class="onyx-alert-icon"&gt;
+    &lt;i class="fas fa-check-circle"&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h4 class="onyx-h5"&gt;Success&lt;/h4&gt;
+    &lt;p class="onyx-text-sm"&gt;Your action was completed successfully.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-alert onyx-alert-warning"&gt;
+  &lt;div class="onyx-alert-icon"&gt;
+    &lt;i class="fas fa-exclamation-triangle"&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h4 class="onyx-h5"&gt;Warning&lt;/h4&gt;
+    &lt;p class="onyx-text-sm"&gt;This action cannot be undone.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-alert onyx-alert-danger"&gt;
+  &lt;div class="onyx-alert-icon"&gt;
+    &lt;i class="fas fa-times-circle"&gt;&lt;/i&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;h4 class="onyx-h5"&gt;Error&lt;/h4&gt;
+    &lt;p class="onyx-text-sm"&gt;Something went wrong. Please try again.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Forms -->
+    <section class="doc-section" id="forms">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Form Elements</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="flex-direction: column; align-items: flex-start; gap: var(--onyx-spacing-md); max-width: 400px;">
+          <div class="onyx-form-group">
+            <label class="onyx-form-label">Text Input</label>
+            <input type="text" class="onyx-input" placeholder="Enter your name">
+          </div>
+          
+          <div class="onyx-form-group">
+            <label class="onyx-form-label">Email Input</label>
+            <input type="email" class="onyx-input" placeholder="Enter your email">
+          </div>
+          
+          <div class="onyx-form-group">
+            <label class="onyx-form-label">Password</label>
+            <input type="password" class="onyx-input" placeholder="Enter your password">
+          </div>
+          
+          <div class="onyx-form-group">
+            <label class="onyx-form-label">Textarea</label>
+            <textarea class="onyx-input onyx-textarea" placeholder="Enter your message"></textarea>
+          </div>
+          
+          <div class="onyx-form-group">
+            <label class="onyx-form-label">Select</label>
+            <select class="onyx-input onyx-select">
+              <option>Choose an option</option>
+              <option>Option 1</option>
+              <option>Option 2</option>
+              <option>Option 3</option>
+            </select>
+          </div>
+          
+          <div class="onyx-form-group">
+            <label class="onyx-form-label">Checkbox</label>
+            <div>
+              <label style="display: flex; align-items: center; margin-bottom: var(--onyx-spacing-xs);">
+                <input type="checkbox" class="onyx-checkbox">
+                <span style="margin-left: var(--onyx-spacing-sm);">Option 1</span>
+              </label>
+              <label style="display: flex; align-items: center;">
+                <input type="checkbox" class="onyx-checkbox" checked>
+                <span style="margin-left: var(--onyx-spacing-sm);">Option 2</span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="onyx-form-group">
+            <label class="onyx-form-label">Radio Buttons</label>
+            <div>
+              <label style="display: flex; align-items: center; margin-bottom: var(--onyx-spacing-xs);">
+                <input type="radio" name="radio-group" class="onyx-radio">
+                <span style="margin-left: var(--onyx-spacing-sm);">Option A</span>
+              </label>
+              <label style="display: flex; align-items: center;">
+                <input type="radio" name="radio-group" class="onyx-radio" checked>
+                <span style="margin-left: var(--onyx-spacing-sm);">Option B</span>
+              </label>
+            </div>
+          </div>
+          
+          <button class="onyx-btn onyx-btn-primary">Submit</button>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-form-group"&gt;
+  &lt;label class="onyx-form-label"&gt;Text Input&lt;/label&gt;
+  &lt;input type="text" class="onyx-input" placeholder="Enter your name"&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-form-group"&gt;
+  &lt;label class="onyx-form-label"&gt;Email Input&lt;/label&gt;
+  &lt;input type="email" class="onyx-input" placeholder="Enter your email"&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-form-group"&gt;
+  &lt;label class="onyx-form-label"&gt;Password&lt;/label&gt;
+  &lt;input type="password" class="onyx-input" placeholder="Enter your password"&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-form-group"&gt;
+  &lt;label class="onyx-form-label"&gt;Textarea&lt;/label&gt;
+  &lt;textarea class="onyx-input onyx-textarea" placeholder="Enter your message"&gt;&lt;/textarea&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-form-group"&gt;
+  &lt;label class="onyx-form-label"&gt;Select&lt;/label&gt;
+  &lt;select class="onyx-input onyx-select"&gt;
+    &lt;option&gt;Choose an option&lt;/option&gt;
+    &lt;option&gt;Option 1&lt;/option&gt;
+    &lt;option&gt;Option 2&lt;/option&gt;
+    &lt;option&gt;Option 3&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-form-group"&gt;
+  &lt;label class="onyx-form-label"&gt;Checkbox&lt;/label&gt;
+  &lt;div&gt;
+    &lt;label style="display: flex; align-items: center; margin-bottom: var(--onyx-spacing-xs);"&gt;
+      &lt;input type="checkbox" class="onyx-checkbox"&gt;
+      &lt;span style="margin-left: var(--onyx-spacing-sm);"&gt;Option 1&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;label style="display: flex; align-items: center;"&gt;
+      &lt;input type="checkbox" class="onyx-checkbox" checked&gt;
+      &lt;span style="margin-left: var(--onyx-spacing-sm);"&gt;Option 2&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-form-group"&gt;
+  &lt;label class="onyx-form-label"&gt;Radio Buttons&lt;/label&gt;
+  &lt;div&gt;
+    &lt;label style="display: flex; align-items: center; margin-bottom: var(--onyx-spacing-xs);"&gt;
+      &lt;input type="radio" name="radio-group" class="onyx-radio"&gt;
+      &lt;span style="margin-left: var(--onyx-spacing-sm);"&gt;Option A&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;label style="display: flex; align-items: center;"&gt;
+      &lt;input type="radio" name="radio-group" class="onyx-radio" checked&gt;
+      &lt;span style="margin-left: var(--onyx-spacing-sm);"&gt;Option B&lt;/span&gt;
+    &lt;/label&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;button class="onyx-btn onyx-btn-primary"&gt;Submit&lt;/button&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Navigation -->
+    <section class="doc-section" id="navigation">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Navigation</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="flex-direction: column; align-items: flex-start; gap: var(--onyx-spacing-md);">
+          <nav class="onyx-navbar">
+            <ul class="onyx-navbar-nav">
+              <li class="onyx-nav-item">
+                <a href="#" class="onyx-nav-link active">Home</a>
+              </li>
+              <li class="onyx-nav-item">
+                <a href="#" class="onyx-nav-link">Features</a>
+              </li>
+              <li class="onyx-nav-item">
+                <a href="#" class="onyx-nav-link">Pricing</a>
+              </li>
+              <li class="onyx-nav-item">
+                <a href="#" class="onyx-nav-link">About</a>
+              </li>
+            </ul>
+          </nav>
+          
+          <div class="onyx-tabs">
+            <div class="onyx-tab active">Profile</div>
+            <div class="onyx-tab">Settings</div>
+            <div class="onyx-tab">Messages</div>
+            <div class="onyx-tab">Notifications</div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;nav class="onyx-navbar"&gt;
+  &lt;ul class="onyx-navbar-nav"&gt;
+    &lt;li class="onyx-nav-item"&gt;
+      &lt;a href="#" class="onyx-nav-link active"&gt;Home&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class="onyx-nav-item"&gt;
+      &lt;a href="#" class="onyx-nav-link"&gt;Features&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class="onyx-nav-item"&gt;
+      &lt;a href="#" class="onyx-nav-link"&gt;Pricing&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class="onyx-nav-item"&gt;
+      &lt;a href="#" class="onyx-nav-link"&gt;About&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+
+&lt;div class="onyx-tabs"&gt;
+  &lt;div class="onyx-tab active"&gt;Profile&lt;/div&gt;
+  &lt;div class="onyx-tab"&gt;Settings&lt;/div&gt;
+  &lt;div class="onyx-tab"&gt;Messages&lt;/div&gt;
+  &lt;div class="onyx-tab"&gt;Notifications&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Badges -->
+    <section class="doc-section" id="badges">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Badges</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <span class="onyx-badge onyx-badge-primary">Primary</span>
+          <span class="onyx-badge onyx-badge-secondary">Secondary</span>
+          <span class="onyx-badge onyx-badge-danger">Danger</span>
+          <span class="onyx-badge onyx-badge-success">Success</span>
+          <span class="onyx-badge onyx-badge-primary onyx-badge-pill">12</span>
+          <span class="onyx-badge onyx-badge-secondary onyx-badge-pill">3</span>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;span class="onyx-badge onyx-badge-primary"&gt;Primary&lt;/span&gt;
+&lt;span class="onyx-badge onyx-badge-secondary"&gt;Secondary&lt;/span&gt;
+&lt;span class="onyx-badge onyx-badge-danger"&gt;Danger&lt;/span&gt;
+&lt;span class="onyx-badge onyx-badge-success"&gt;Success&lt;/span&gt;
+&lt;span class="onyx-badge onyx-badge-primary onyx-badge-pill"&gt;12&lt;/span&gt;
+&lt;span class="onyx-badge onyx-badge-secondary onyx-badge-pill"&gt;3&lt;/span&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Modals -->
+    <section class="doc-section" id="modals">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Modals</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <button class="onyx-btn onyx-btn-primary" id="demo-modal-btn">Open Modal</button>
+          
+          <div class="onyx-modal" id="demo-modal">
+            <div class="onyx-modal-content">
+              <div class="onyx-modal-header">
+                <h3 class="onyx-modal-title">Modal Title</h3>
+                <button class="onyx-modal-close" id="demo-modal-close">&times;</button>
+              </div>
+              <div class="onyx-modal-body">
+                <p class="onyx-text">This is a modal dialog. It can contain any content you want to display to the user.</p>
+              </div>
+              <div class="onyx-modal-footer">
+                <button class="onyx-btn onyx-btn-ghost">Cancel</button>
+                <button class="onyx-btn onyx-btn-primary">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;button class="onyx-btn onyx-btn-primary" id="modal-trigger"&gt;Open Modal&lt;/button&gt;
+
+&lt;div class="onyx-modal" id="example-modal"&gt;
+  &lt;div class="onyx-modal-content"&gt;
+    &lt;div class="onyx-modal-header"&gt;
+      &lt;h3 class="onyx-modal-title"&gt;Modal Title&lt;/h3&gt;
+      &lt;button class="onyx-modal-close"&gt;&amp;times;&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-modal-body"&gt;
+      &lt;p class="onyx-text"&gt;This is a modal dialog...&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-modal-footer"&gt;
+      &lt;button class="onyx-btn onyx-btn-ghost"&gt;Cancel&lt;/button&gt;
+      &lt;button class="onyx-btn onyx-btn-primary"&gt;Confirm&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  const modal = document.getElementById('example-modal');
+  const trigger = document.getElementById('modal-trigger');
+  const closeBtn = document.querySelector('.onyx-modal-close');
+  
+  trigger.addEventListener('click', () =&gt; {
+    modal.classList.add('active');
+  });
+  
+  closeBtn.addEventListener('click', () =&gt; {
+    modal.classList.remove('active');
+  });
+&lt;/script&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Toasts -->
+    <section class="doc-section" id="toasts">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Toasts</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="flex-direction: column; align-items: flex-start; gap: var(--onyx-spacing-sm);">
+          <button class="onyx-btn onyx-btn-primary" id="show-success-toast">Show Success Toast</button>
+          <button class="onyx-btn onyx-btn-danger" id="show-error-toast">Show Error Toast</button>
+          <button class="onyx-btn onyx-btn-secondary" id="show-info-toast">Show Info Toast</button>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-toast-container" id="toast-container"&gt;
+  &lt;!-- Toasts will be added here dynamically --&gt;
+&lt;/div&gt;
+
+&lt;button class="onyx-btn onyx-btn-primary" id="show-toast"&gt;Show Toast&lt;/button&gt;
+
+&lt;script&gt;
+  function showToast(type, title, message) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `onyx-toast onyx-toast-${type} show`;
+    
+    toast.innerHTML = `
+      &lt;div class="onyx-toast-icon"&gt;
+        &lt;i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;div class="onyx-toast-content"&gt;
+        &lt;div class="onyx-toast-title"&gt;${title}&lt;/div&gt;
+        &lt;div class="onyx-toast-message"&gt;${message}&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button class="onyx-toast-close"&gt;&amp;times;&lt;/button&gt;
+    `;
+    
+    container.appendChild(toast);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() =&gt; {
+      toast.remove();
+    }, 5000);
+    
+    // Close button
+    toast.querySelector('.onyx-toast-close').addEventListener('click', () =&gt; {
+      toast.remove();
+    });
+  }
+  
+  document.getElementById('show-toast').addEventListener('click', () =&gt; {
+    showToast('success', 'Success!', 'Your action was completed successfully.');
+  });
+&lt;/script&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Avatars -->
+    <section class="doc-section" id="avatars">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Avatars</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <div class="onyx-avatar">
+            <div class="onyx-avatar-initials">JS</div>
+            <div class="onyx-avatar-status onyx-avatar-status-online"></div>
+          </div>
+          
+          <div class="onyx-avatar">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
+            <div class="onyx-avatar-status onyx-avatar-status-busy"></div>
+          </div>
+          
+          <div class="onyx-avatar onyx-avatar-sm">
+            <div class="onyx-avatar-initials">AB</div>
+          </div>
+          
+          <div class="onyx-avatar onyx-avatar-lg">
+            <div class="onyx-avatar-initials">CD</div>
+            <div class="onyx-avatar-status onyx-avatar-status-away"></div>
+          </div>
+          
+          <div class="onyx-avatar onyx-avatar-xl">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-avatar"&gt;
+  &lt;div class="onyx-avatar-initials"&gt;JS&lt;/div&gt;
+  &lt;div class="onyx-avatar-status onyx-avatar-status-online"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-avatar"&gt;
+  &lt;img src="user.jpg" alt="User"&gt;
+  &lt;div class="onyx-avatar-status onyx-avatar-status-busy"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-avatar onyx-avatar-sm"&gt;
+  &lt;div class="onyx-avatar-initials"&gt;AB&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-avatar onyx-avatar-lg"&gt;
+  &lt;div class="onyx-avatar-initials"&gt;CD&lt;/div&gt;
+  &lt;div class="onyx-avatar-status onyx-avatar-status-away"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="onyx-avatar onyx-avatar-xl"&gt;
+  &lt;img src="user.jpg" alt="User"&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Lists -->
+    <section class="doc-section" id="lists">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Lists</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="max-width: 400px;">
+          <div class="onyx-list">
+            <div class="onyx-list-item">
+              <div class="onyx-list-item-icon">
+                <i class="fas fa-inbox"></i>
+              </div>
+              <div class="onyx-list-item-content">
+                <div class="onyx-list-item-title">Inbox</div>
+                <div class="onyx-list-item-subtitle">You have 5 new messages</div>
+              </div>
+              <div class="onyx-list-item-action">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+            
+            <div class="onyx-list-item">
+              <div class="onyx-list-item-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <div class="onyx-list-item-content">
+                <div class="onyx-list-item-title">Starred</div>
+                <div class="onyx-list-item-subtitle">Your favorite items</div>
+              </div>
+              <div class="onyx-list-item-action">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+            
+            <div class="onyx-list-item">
+              <div class="onyx-list-item-icon">
+                <i class="fas fa-paper-plane"></i>
+              </div>
+              <div class="onyx-list-item-content">
+                <div class="onyx-list-item-title">Sent</div>
+                <div class="onyx-list-item-subtitle">View sent messages</div>
+              </div>
+              <div class="onyx-list-item-action">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+            
+            <div class="onyx-list-item">
+              <div class="onyx-list-item-icon">
+                <i class="fas fa-trash"></i>
+              </div>
+              <div class="onyx-list-item-content">
+                <div class="onyx-list-item-title">Trash</div>
+                <div class="onyx-list-item-subtitle">Deleted items</div>
+              </div>
+              <div class="onyx-list-item-action">
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-list"&gt;
+  &lt;div class="onyx-list-item"&gt;
+    &lt;div class="onyx-list-item-icon"&gt;
+      &lt;i class="fas fa-inbox"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-list-item-content"&gt;
+      &lt;div class="onyx-list-item-title"&gt;Inbox&lt;/div&gt;
+      &lt;div class="onyx-list-item-subtitle"&gt;You have 5 new messages&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-list-item-action"&gt;
+      &lt;i class="fas fa-chevron-right"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="onyx-list-item"&gt;
+    &lt;div class="onyx-list-item-icon"&gt;
+      &lt;i class="fas fa-star"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-list-item-content"&gt;
+      &lt;div class="onyx-list-item-title"&gt;Starred&lt;/div&gt;
+      &lt;div class="onyx-list-item-subtitle"&gt;Your favorite items&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-list-item-action"&gt;
+      &lt;i class="fas fa-chevron-right"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="onyx-list-item"&gt;
+    &lt;div class="onyx-list-item-icon"&gt;
+      &lt;i class="fas fa-paper-plane"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-list-item-content"&gt;
+      &lt;div class="onyx-list-item-title"&gt;Sent&lt;/div&gt;
+      &lt;div class="onyx-list-item-subtitle"&gt;View sent messages&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-list-item-action"&gt;
+      &lt;i class="fas fa-chevron-right"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="onyx-list-item"&gt;
+    &lt;div class="onyx-list-item-icon"&gt;
+      &lt;i class="fas fa-trash"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-list-item-content"&gt;
+      &lt;div class="onyx-list-item-title"&gt;Trash&lt;/div&gt;
+      &lt;div class="onyx-list-item-subtitle"&gt;Deleted items&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-list-item-action"&gt;
+      &lt;i class="fas fa-chevron-right"&gt;&lt;/i&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Dropdowns -->
+    <section class="doc-section" id="dropdowns">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Dropdowns</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <div class="onyx-dropdown">
+            <button class="onyx-btn onyx-btn-secondary onyx-dropdown-toggle" id="dropdown-toggle">
+              Dropdown Menu
+              <i class="fas fa-chevron-down four-px-margin-left"></i>
+            </button>
+            <div class="onyx-dropdown-menu" id="dropdown-menu">
+              <a href="#" class="onyx-dropdown-item">
+                <div class="onyx-dropdown-item-icon">
+                  <i class="fas fa-user"></i>
+                </div>
+                Profile
+              </a>
+              <a href="#" class="onyx-dropdown-item">
+                <div class="onyx-dropdown-item-icon">
+                  <i class="fas fa-cog"></i>
+                </div>
+                Settings
+              </a>
+              <div class="onyx-dropdown-divider"></div>
+              <a href="#" class="onyx-dropdown-item">
+                <div class="onyx-dropdown-item-icon">
+                  <i class="fas fa-sign-out-alt"></i>
+                </div>
+                Logout
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-dropdown"&gt;
+  &lt;button class="onyx-btn onyx-btn-secondary onyx-dropdown-toggle"&gt;
+    Dropdown Menu
+    &lt;i class="fas fa-chevron-down"&gt;&lt;/i&gt;
+  &lt;/button&gt;
+  &lt;div class="onyx-dropdown-menu"&gt;
+    &lt;a href="#" class="onyx-dropdown-item"&gt;
+      &lt;div class="onyx-dropdown-item-icon"&gt;
+        &lt;i class="fas fa-user"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      Profile
+    &lt;/a&gt;
+    &lt;a href="#" class="onyx-dropdown-item"&gt;
+      &lt;div class="onyx-dropdown-item-icon"&gt;
+        &lt;i class="fas fa-cog"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      Settings
+    &lt;/a&gt;
+    &lt;div class="onyx-dropdown-divider"&gt;&lt;/div&gt;
+    &lt;a href="#" class="onyx-dropdown-item"&gt;
+      &lt;div class="onyx-dropdown-item-icon"&gt;
+        &lt;i class="fas fa-sign-out-alt"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      Logout
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  const toggle = document.querySelector('.onyx-dropdown-toggle');
+  const menu = document.querySelector('.onyx-dropdown-menu');
+  
+  toggle.addEventListener('click', () =&gt; {
+    menu.classList.toggle('show');
+  });
+  
+  // Close when clicking outside
+  document.addEventListener('click', (e) =&gt; {
+    if (!e.target.closest('.onyx-dropdown')) {
+      menu.classList.remove('show');
+    }
+  });
+&lt;/script&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Accordion -->
+    <section class="doc-section" id="accordion">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Accordion</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="max-width: 600px;">
+          <div class="onyx-accordion">
+            <div class="onyx-accordion-item">
+              <div class="onyx-accordion-header">
+                <div class="onyx-accordion-title">Section 1</div>
+                <div class="onyx-accordion-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+              <div class="onyx-accordion-content">
+                <p class="onyx-text">Content for section 1. This can be any HTML content you want to display when the accordion is expanded.</p>
+              </div>
+            </div>
+            
+            <div class="onyx-accordion-item">
+              <div class="onyx-accordion-header">
+                <div class="onyx-accordion-title">Section 2</div>
+                <div class="onyx-accordion-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+              <div class="onyx-accordion-content">
+                <p class="onyx-text">Content for section 2. Each accordion item operates independently by default.</p>
+              </div>
+            </div>
+            
+            <div class="onyx-accordion-item">
+              <div class="onyx-accordion-header">
+                <div class="onyx-accordion-title">Section 3</div>
+                <div class="onyx-accordion-icon">
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+              <div class="onyx-accordion-content">
+                <p class="onyx-text">Content for section 3. The accordion provides a great way to organize content in a compact space.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-accordion"&gt;
+  &lt;div class="onyx-accordion-item"&gt;
+    &lt;div class="onyx-accordion-header"&gt;
+      &lt;div class="onyx-accordion-title"&gt;Section 1&lt;/div&gt;
+      &lt;div class="onyx-accordion-icon"&gt;
+        &lt;i class="fas fa-chevron-down"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-accordion-content"&gt;
+      &lt;p class="onyx-text"&gt;Content for section 1...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="onyx-accordion-item"&gt;
+    &lt;div class="onyx-accordion-header"&gt;
+      &lt;div class="onyx-accordion-title"&gt;Section 2&lt;/div&gt;
+      &lt;div class="onyx-accordion-icon"&gt;
+        &lt;i class="fas fa-chevron-down"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-accordion-content"&gt;
+      &lt;p class="onyx-text"&gt;Content for section 2...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  
+  &lt;div class="onyx-accordion-item"&gt;
+    &lt;div class="onyx-accordion-header"&gt;
+      &lt;div class="onyx-accordion-title"&gt;Section 3&lt;/div&gt;
+      &lt;div class="onyx-accordion-icon"&gt;
+        &lt;i class="fas fa-chevron-down"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="onyx-accordion-content"&gt;
+      &lt;p class="onyx-text"&gt;Content for section 3...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  document.querySelectorAll('.onyx-accordion-header').forEach(header =&gt; {
+    header.addEventListener('click', () =&gt; {
+      const item = header.parentElement;
+      item.classList.toggle('active');
+    });
+  });
+&lt;/script&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Toggle Switch -->
+    <section class="doc-section" id="toggles">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Toggle Switch</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="flex-direction: column; align-items: flex-start; gap: var(--onyx-spacing-md);">
+          <label style="display: flex; align-items: center; gap: var(--onyx-spacing-md);">
+            <div class="onyx-switch">
+              <input type="checkbox">
+              <div class="onyx-switch-slider"></div>
+            </div>
+            <span>Toggle Switch</span>
+          </label>
+          
+          <label style="display: flex; align-items: center; gap: var(--onyx-spacing-md);">
+            <div class="onyx-switch">
+              <input type="checkbox" checked>
+              <div class="onyx-switch-slider"></div>
+            </div>
+            <span>Checked by Default</span>
+          </label>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;label style="display: flex; align-items: center; gap: var(--onyx-spacing-md);"&gt;
+  &lt;div class="onyx-switch"&gt;
+    &lt;input type="checkbox"&gt;
+    &lt;div class="onyx-switch-slider"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;span&gt;Toggle Switch&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;label style="display: flex; align-items: center; gap: var(--onyx-spacing-md);"&gt;
+  &lt;div class="onyx-switch"&gt;
+    &lt;input type="checkbox" checked&gt;
+    &lt;div class="onyx-switch-slider"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;span&gt;Checked by Default&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Pagination -->
+    <section class="doc-section" id="pagination">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Pagination</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <div class="onyx-pagination">
+            <div class="onyx-page-item">
+              <a href="#" class="onyx-page-link">
+                <i class="fas fa-chevron-left"></i>
+              </a>
+            </div>
+            <div class="onyx-page-item">
+              <a href="#" class="onyx-page-link">1</a>
+            </div>
+            <div class="onyx-page-item active">
+              <a href="#" class="onyx-page-link">2</a>
+            </div>
+            <div class="onyx-page-item">
+              <a href="#" class="onyx-page-link">3</a>
+            </div>
+            <div class="onyx-page-item">
+              <a href="#" class="onyx-page-link">4</a>
+            </div>
+            <div class="onyx-page-item">
+              <a href="#" class="onyx-page-link">5</a>
+            </div>
+            <div class="onyx-page-item">
+              <a href="#" class="onyx-page-link">
+                <i class="fas fa-chevron-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-pagination"&gt;
+  &lt;div class="onyx-page-item"&gt;
+    &lt;a href="#" class="onyx-page-link"&gt;
+      &lt;i class="fas fa-chevron-left"&gt;&lt;/i&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="onyx-page-item"&gt;
+    &lt;a href="#" class="onyx-page-link"&gt;1&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="onyx-page-item active"&gt;
+    &lt;a href="#" class="onyx-page-link"&gt;2&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="onyx-page-item"&gt;
+    &lt;a href="#" class="onyx-page-link"&gt;3&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="onyx-page-item"&gt;
+    &lt;a href="#" class="onyx-page-link"&gt;4&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="onyx-page-item"&gt;
+    &lt;a href="#" class="onyx-page-link"&gt;5&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class="onyx-page-item"&gt;
+    &lt;a href="#" class="onyx-page-link"&gt;
+      &lt;i class="fas fa-chevron-right"&gt;&lt;/i&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Spinners -->
+    <section class="doc-section" id="spinners">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Spinners</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview">
+          <div class="onyx-spinner"></div>
+          <div class="onyx-spinner onyx-spinner-sm"></div>
+          <div class="onyx-spinner onyx-spinner-lg"></div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;div class="onyx-spinner"&gt;&lt;/div&gt;
+&lt;div class="onyx-spinner onyx-spinner-sm"&gt;&lt;/div&gt;
+&lt;div class="onyx-spinner onyx-spinner-lg"&gt;&lt;/div&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Typography -->
+    <section class="doc-section" id="typography">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Typography</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="flex-direction: column; align-items: flex-start; gap: var(--onyx-spacing-md);">
+          <h1 class="onyx-h1">Heading 1</h1>
+          <h2 class="onyx-h2">Heading 2</h2>
+          <h3 class="onyx-h3">Heading 3</h3>
+          <h4 class="onyx-h4">Heading 4</h4>
+          <h5 class="onyx-h5">Heading 5</h5>
+          <h6 class="onyx-h6">Heading 6</h6>
+          
+          <p class="onyx-text">This is a regular paragraph text. The quick brown fox jumps over the lazy dog.</p>
+          <p class="onyx-text-sm">This is small text. The quick brown fox jumps over the lazy dog.</p>
+          <p class="onyx-text-xs">This is extra small text. The quick brown fox jumps over the lazy dog.</p>
+          
+          <p class="onyx-text onyx-text-bold">This is bold text.</p>
+          <p class="onyx-text onyx-text-muted">This is muted text.</p>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;h1 class="onyx-h1"&gt;Heading 1&lt;/h1&gt;
+&lt;h2 class="onyx-h2"&gt;Heading 2&lt;/h2&gt;
+&lt;h3 class="onyx-h3"&gt;Heading 3&lt;/h3&gt;
+&lt;h4 class="onyx-h4"&gt;Heading 4&lt;/h4&gt;
+&lt;h5 class="onyx-h5"&gt;Heading 5&lt;/h5&gt;
+&lt;h6 class="onyx-h6"&gt;Heading 6&lt;/h6&gt;
+
+&lt;p class="onyx-text"&gt;This is a regular paragraph text...&lt;/p&gt;
+&lt;p class="onyx-text-sm"&gt;This is small text...&lt;/p&gt;
+&lt;p class="onyx-text-xs"&gt;This is extra small text...&lt;/p&gt;
+
+&lt;p class="onyx-text onyx-text-bold"&gt;This is bold text.&lt;/p&gt;
+&lt;p class="onyx-text onyx-text-muted"&gt;This is muted text.&lt;/p&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Spacing -->
+    <section class="doc-section" id="spacing">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Spacing Utilities</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="flex-direction: column; align-items: flex-start; gap: var(--onyx-spacing-md);">
+          <div style="background-color: var(--onyx-gray); width: 100px; height: 50px;" class="onyx-mt-sm"></div>
+          <div style="background-color: var(--onyx-gray); width: 100px; height: 50px;" class="onyx-mt-md"></div>
+          <div style="background-color: var(--onyx-gray); width: 100px; height: 50px;" class="onyx-mt-lg"></div>
+          
+          <div style="display: flex; gap: var(--onyx-spacing-md);">
+            <div style="background-color: var(--onyx-gray); width: 50px; height: 50px;" class="onyx-pt-sm"></div>
+            <div style="background-color: var(--onyx-gray); width: 50px; height: 50px;" class="onyx-pt-md"></div>
+            <div style="background-color: var(--onyx-gray); width: 50px; height: 50px;" class="onyx-pt-lg"></div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;!-- Margin top --&gt;
+&lt;div class="onyx-mt-sm"&gt;&lt;/div&gt; &lt;!-- small margin --&gt;
+&lt;div class="onyx-mt-md"&gt;&lt;/div&gt; &lt;!-- medium margin --&gt;
+&lt;div class="onyx-mt-lg"&gt;&lt;/div&gt; &lt;!-- large margin --&gt;
+
+&lt;!-- Padding top --&gt;
+&lt;div class="onyx-pt-sm"&gt;&lt;/div&gt;
+&lt;div class="onyx-pt-md"&gt;&lt;/div&gt;
+&lt;div class="onyx-pt-lg"&gt;&lt;/div&gt;
+
+&lt;!-- Other utilities --&gt;
+&lt;div class="onyx-mb-sm"&gt;&lt;/div&gt; &lt;!-- margin bottom --&gt;
+&lt;div class="onyx-pb-sm"&gt;&lt;/div&gt; &lt;!-- padding bottom --&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Flex Utilities -->
+    <section class="doc-section" id="flex">
+      <div class="doc-section-header">
+        <h2 class="doc-section-title">Flex Utilities</h2>
+        <a href="#" class="doc-section-link">
+          <i class="fas fa-arrow-up"></i>
+          Back to top
+        </a>
+      </div>
+      
+      <div class="doc-component">
+        <div class="doc-component-preview" style="flex-direction: column; align-items: flex-start; gap: var(--onyx-spacing-md);">
+          <div style="display: flex; gap: var(--onyx-spacing-md); background-color: var(--onyx-gray); padding: var(--onyx-spacing-md); width: 100%;">
+            <div style="background-color: var(--onyx-light-gray); padding: var(--onyx-spacing-sm);">Item 1</div>
+            <div style="background-color: var(--onyx-light-gray); padding: var(--onyx-spacing-sm);">Item 2</div>
+            <div style="background-color: var(--onyx-light-gray); padding: var(--onyx-spacing-sm);">Item 3</div>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: var(--onyx-spacing-md); background-color: var(--onyx-gray); padding: var(--onyx-spacing-md); width: 100%;">
+            <div style="background-color: var(--onyx-light-gray); padding: var(--onyx-spacing-sm);">Item 1</div>
+            <div style="background-color: var(--onyx-light-gray); padding: var(--onyx-spacing-sm);">Item 2</div>
+            <div style="background-color: var(--onyx-light-gray); padding: var(--onyx-spacing-sm);">Item 3</div>
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; background-color: var(--onyx-gray); padding: var(--onyx-spacing-md); width: 100%;">
+            <div style="background-color: var(--onyx-light-gray); padding: var(--onyx-spacing-sm);">Left</div>
+            <div style="background-color: var(--onyx-light-gray); padding: var(--onyx-spacing-sm);">Right</div>
+          </div>
+        </div>
+        <div class="doc-component-code">
+          <div class="doc-component-code-header">
+            <h3 class="doc-component-code-title">HTML</h3>
+            <button class="doc-component-code-copy">
+              <i class="far fa-copy"></i>
+              Copy
+            </button>
+          </div>
+          <div class="doc-component-code-content">
+            <pre><code>&lt;!-- Flex row --&gt;
+&lt;div class="onyx-d-flex"&gt;
+  &lt;div&gt;Item 1&lt;/div&gt;
+  &lt;div&gt;Item 2&lt;/div&gt;
+  &lt;div&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Flex column --&gt;
+&lt;div class="onyx-d-flex onyx-flex-column"&gt;
+  &lt;div&gt;Item 1&lt;/div&gt;
+  &lt;div&gt;Item 2&lt;/div&gt;
+  &lt;div&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Space between --&gt;
+&lt;div class="onyx-d-flex onyx-justify-between"&gt;
+  &lt;div&gt;Left&lt;/div&gt;
+  &lt;div&gt;Right&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Other utilities --&gt;
+&lt;div class="onyx-d-flex onyx-align-center"&gt;...&lt;/div&gt; &lt;!-- align items center --&gt;
+&lt;div class="onyx-d-flex onyx-justify-center"&gt;...&lt;/div&gt; &lt;!-- justify content center --&gt;
+&lt;div class="onyx-d-flex onyx-flex-wrap"&gt;...&lt;/div&gt; &lt;!-- flex wrap --&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <script>
+    // Copy functionality for all code blocks
+    document.querySelectorAll('.doc-component-code-copy').forEach(button => {
+      button.addEventListener('click', () => {
+        const codeBlock = button.closest('.doc-component-code').querySelector('code');
+        const textToCopy = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+          const tooltip = document.createElement('div');
+          tooltip.textContent = 'Copied!';
+          tooltip.style.position = 'absolute';
+          tooltip.style.backgroundColor = 'var(--onyx-dark)';
+          tooltip.style.color = 'var(--onyx-white)';
+          tooltip.style.padding = 'var(--onyx-spacing-xs) var(--onyx-spacing-sm)';
+          tooltip.style.borderRadius = 'var(--onyx-radius-sm)';
+          tooltip.style.fontSize = '0.75rem';
+          tooltip.style.boxShadow = 'var(--onyx-shadow-md)';
+          tooltip.style.top = '-35px';
+          tooltip.style.left = '50%';
+          tooltip.style.transform = 'translateX(-50%)';
+          tooltip.style.opacity = '0';
+          tooltip.style.transition = 'opacity 0.2s';
+          
+          button.style.position = 'relative';
+          button.appendChild(tooltip);
+          
+          // Show tooltip
+          setTimeout(() => {
+            tooltip.style.opacity = '1';
+          }, 10);
+          
+          // Hide and remove tooltip after 2 seconds
+          setTimeout(() => {
+            tooltip.style.opacity = '0';
+            setTimeout(() => {
+              tooltip.remove();
+            }, 200);
+          }, 2000);
+        });
+      });
+    });
+    
+    // Copy CDN link
+    document.getElementById('cdn-copy').addEventListener('click', () => {
+      const input = document.getElementById('cdn-input');
+      input.select();
+      document.execCommand('copy');
+      
+      const tooltip = document.getElementById('copy-tooltip');
+      tooltip.classList.add('show');
+      
+      setTimeout(() => {
+        tooltip.classList.remove('show');
+      }, 2000);
+    });
+    
+    // Demo modal functionality
+    const demoModal = document.getElementById('demo-modal');
+    const demoModalBtn = document.getElementById('demo-modal-btn');
+    const demoModalClose = document.getElementById('demo-modal-close');
+    
+    if (demoModalBtn && demoModal && demoModalClose) {
+      demoModalBtn.addEventListener('click', () => {
+        demoModal.classList.add('active');
+      });
+      
+      demoModalClose.addEventListener('click', () => {
+        demoModal.classList.remove('active');
+      });
+    }
+    
+    // Demo toast functionality
+    function showToast(type, title, message) {
+      const container = document.createElement('div');
+      container.className = `onyx-toast onyx-toast-${type}`;
+      container.style.position = 'fixed';
+      container.style.bottom = '20px';
+      container.style.right = '20px';
+      
+      container.innerHTML = `
+        <div class="onyx-toast-icon">
+          <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i>
+        </div>
+        <div class="onyx-toast-content">
+          <div class="onyx-toast-title">${title}</div>
+          <div class="onyx-toast-message">${message}</div>
+        </div>
+        <button class="onyx-toast-close">&times;</button>
+      `;
+      
+      document.body.appendChild(container);
+      
+      // Trigger animation
+      setTimeout(() => {
+        container.style.opacity = '1';
+        container.style.transform = 'translateY(0)';
+      }, 10);
+      
+      // Auto remove after 5 seconds
+      setTimeout(() => {
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          container.remove();
+        }, 300);
+      }, 5000);
+      
+      // Close button
+      container.querySelector('.onyx-toast-close').addEventListener('click', () => {
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          container.remove();
+        }, 300);
+      });
+    }
+    
+    // Toast buttons
+    const successToastBtn = document.getElementById('show-success-toast');
+    const errorToastBtn = document.getElementById('show-error-toast');
+    const infoToastBtn = document.getElementById('show-info-toast');
+    
+    if (successToastBtn) {
+      successToastBtn.addEventListener('click', () => {
+        showToast('success', 'Success!', 'Your action was completed successfully.');
+      });
+    }
+    
+    if (errorToastBtn) {
+      errorToastBtn.addEventListener('click', () => {
+        showToast('error', 'Error!', 'Something went wrong. Please try again.');
+      });
+    }
+    
+    if (infoToastBtn) {
+      infoToastBtn.addEventListener('click', () => {
+        showToast('info', 'Info', 'Here is some information for you.');
+      });
+    }
+    
+    // Dropdown functionality
+    const dropdownToggle = document.getElementById('dropdown-toggle');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    
+    if (dropdownToggle && dropdownMenu) {
+      dropdownToggle.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('show');
+      });
+      
+      // Close when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.onyx-dropdown')) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+    }
+    
+    // Accordion functionality
+    const accordionHeaders = document.querySelectorAll('.onyx-accordion-header');
+    accordionHeaders.forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+    
+    // Smooth scrolling for sidebar links
+    document.querySelectorAll('.doc-sidebar-nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Remove active class from all links
+        document.querySelectorAll('.doc-sidebar-nav-link').forEach(navLink => {
+          navLink.classList.remove('active');
+        });
+        
+        // Add active class to clicked link
+        link.classList.add('active');
+        
+        const targetId = link.getAttribute('href');
+        if (targetId && targetId !== '#') {
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 20,
+              behavior: 'smooth'
+            });
+          }
+        }
+      });
+    });
+    
+    // Set active sidebar link based on scroll position
+    const sections = document.querySelectorAll('.doc-section');
+    const navLinks = document.querySelectorAll('.doc-sidebar-nav-link');
+    
+    window.addEventListener('scroll', () => {
+      let current = '';
+      
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        
+        if (pageYOffset >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
